@@ -13,6 +13,7 @@ def put_emails_to(email_base):
     file_email = open(email_base + '.txt', 'w', encoding='utf-8') #создает и выгружает емайлы в файл
     file_email.write('\n'.join(found))
     file_email.close()
+    print('Файл с емайлами успешно создан')
 
 get_emails_from(site = 'http://mosigra.ru/')
 put_emails_to('emails_base.txt')
