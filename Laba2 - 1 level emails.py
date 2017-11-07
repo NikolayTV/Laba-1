@@ -43,5 +43,5 @@ for link in links:
     found = set(found)
     print(len(found))
     print(found)
-
+print("ALLAHU AKBAR")
 
