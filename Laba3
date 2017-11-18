@@ -1,0 +1,48 @@
+import requests
+from bs4 import BeautifulSoup
+
+soup = BeautifulSoup(requests.get('https://www.washingtonpost.com/').text, "html.parser")
+
+def authors():
+    authors_list =  []
+    with open('authors.txt', 'w', encoding='utf-8') as file:
+        for q in soup.find_all("span", attrs=["author vcard"]):
+            authors_list.append([q.get_text()])
+        print('authors_list:', authors_list)
+        print('number of authors:', len(authors_list))
+        for author in authors_list:
+            file.write('%s\n' % author) # file.write('\n'.join(str(i) for author in authors_list))
+
+def headline():
+    headlines = []
+    with open('headlines.txt', 'w', encoding='utf-8') as file:
+        for q in soup.find_all("div", attrs=[
+                                "headline x-small normal-style text-align-inherit ",
+                                "headline xx-small normal-style text-align-inherit ",
+                                "headline small normal-style text-align-inherit ",
+                                "headline small thin-style text-align-inherit "
+        ]):
+
+            headlines.append([q.get_text()])
+        print('headlines:', headlines)
+        print('number of headlines:', len(headlines))
+        for headline in headlines:
+            file.write('%s\n' % headline)
+
+def annotation():
+    annotations = []
+    with open('annotations.txt', 'w', encoding='utf-8') as file:
+        for annotation in soup.find_all("div", attrs=["blurb normal normal-style "]):
+            annotations.append([annotation.get_text()])
+        print('annotations:', annotations)
+        print('number of annotations:', len(annotations))
+        for annotation in annotations:
+            file.write('%s\n' % annotation)  # file.write('\n'.join(str(i) for author in authors_list))
+
+def main():
+    authors()
+    headline()
+    annotation()
+
+if __name__ == "__main__":
+    main()
